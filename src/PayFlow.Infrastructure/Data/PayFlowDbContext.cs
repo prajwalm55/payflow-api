@@ -16,7 +16,10 @@ public sealed class PayFlowDbContext(DbContextOptions<PayFlowDbContext> options)
             entity.Property(a => a.OwnerName).HasMaxLength(200).IsRequired();
             entity.Property(a => a.Currency).HasConversion<string>().HasMaxLength(3).IsRequired();
             entity.Property(a => a.Balance).HasPrecision(18, 2);
-            entity.Property(a => a.RowVersion).IsRowVersion().HasDefaultValue(new byte[8]);
+            if (Database.ProviderName == "Microsoft.EntityFrameworkCore.Sqlite")
+                entity.Property(a => a.RowVersion).IsConcurrencyToken().ValueGeneratedOnAddOrUpdate().HasDefaultValue(new byte[8]);
+            else
+                entity.Property(a => a.RowVersion).IsRowVersion();
         });
         modelBuilder.Entity<Transaction>(entity =>
         {

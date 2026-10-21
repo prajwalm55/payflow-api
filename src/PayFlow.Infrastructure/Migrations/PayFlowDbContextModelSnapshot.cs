@@ -46,8 +46,7 @@ namespace PayFlow.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
-                        .HasDefaultValue(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 });
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 

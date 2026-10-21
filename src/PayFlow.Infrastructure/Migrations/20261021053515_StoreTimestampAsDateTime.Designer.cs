@@ -12,7 +12,7 @@ using PayFlow.Infrastructure.Data;
 namespace PayFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(PayFlowDbContext))]
-    [Migration("20261021053121_StoreTimestampAsDateTime")]
+    [Migration("20261021053515_StoreTimestampAsDateTime")]
     partial class StoreTimestampAsDateTime
     {
         /// <inheritdoc />
@@ -49,8 +49,7 @@ namespace PayFlow.Infrastructure.Migrations
                         .IsConcurrencyToken()
                         .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("rowversion")
-                        .HasDefaultValue(new byte[] { 0, 0, 0, 0, 0, 0, 0, 0 });
+                        .HasColumnType("rowversion");
 
                     b.HasKey("Id");
 
