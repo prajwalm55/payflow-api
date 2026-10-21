@@ -1,0 +1,24 @@
+# ASP.NET/Visual Studio
+*.dbmdl
+*.bak
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+# Tools
+.idea
+*.vs
+.vscode
+# EFS
+bin/
+obj/
+# Docker
+# NLog
+*.nlog
+# Data
+*.mdf
+# System
+*.DS_Store
+.env
+TestResults/
+

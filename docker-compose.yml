@@ -1,0 +1,24 @@
+services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: ${PAYFLOW_SQL_PASSWORD:-PayFlow_dev_12345!}
+      PAYFLOW_SQL_PASSWORD: ${PAYFLOW_SQL_PASSWORD:-PayFlow_dev_12345!}
+      ACCEPT_EULA: Y
+    ports:
+      - "1433:1433"
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -C -S localhost -U SA -P \"$${PAYFLOW_SQL_PASSWORD:-PayFlow_dev_12345!}\" -Q 'SELECT 1' || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  api:
+    build: .
+    environment:
+      CONNECTIONSTRINGS__DefaultConnection: Server=sqlserver;Database=PayFlow;User Id=sa;Password=$${PAYFLOW_SQL_PASSWORD:-PayFlow_dev_12345!};TrustServerCertificate=True
+      ApplyMigrations: "true"
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    ports:
+      - "5000:80"
